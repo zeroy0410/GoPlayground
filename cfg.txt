@@ -1,0 +1,143 @@
+.0: # Body@L5
+        z := x * y
+        i := 0
+        succs: 3
+
+.1: # ForBody@L10
+        i%2 == 0
+        succs: 5 7
+
+.2: # ForDone@L10
+        z % 3
+        0
+        succs: 9 11
+
+.3: # ForLoop@L10
+        i < 5
+        succs: 1 2
+
+.4: # ForPost@L10
+        i++
+        succs: 3
+
+.5: # IfThen@L11
+        z += i
+        succs: 6
+
+.6: # IfDone@L11
+        succs: 4
+
+.7: # IfElse@L11
+        z -= i
+        succs: 6
+
+.8: # SwitchDone@L19
+        succs: 14
+
+.9: # SwitchCaseBody@L20
+        fmt.Println("z is divisible by 3")
+        succs: 8
+
+.10: # SwitchCaseBody@L22
+        fmt.Println("z has a remainder of 1 when divided by 3")
+        succs: 8
+
+.11: # SwitchNextCase@L20
+        1
+        succs: 10 13
+
+.12: # SwitchCaseBody@L24
+        fmt.Println("z has a remainder of 2 when divided by 3")
+        succs: 8
+
+.13: # SwitchNextCase@L22
+        succs: 12
+
+.14: # Label@L29
+        j := 0
+        succs: 17
+
+.15: # ForBody@L30
+        k := 0
+        succs: 21
+
+.16: # ForDone@L30
+        defer fmt.Println("Function execution completed")
+        func() {
+                fmt.Println("Anonymous function executed")
+        }()
+        z > 10
+        succs: 29 31
+
+.17: # ForLoop@L30
+        j < 3
+        succs: 15 16
+
+.18: # ForPost@L30
+        j++
+        succs: 17
+
+.19: # ForBody@L31
+        j+k == 3
+        succs: 23 24
+
+.20: # ForDone@L31
+        succs: 18
+
+.21: # ForLoop@L31
+        k < 3
+        succs: 19 20
+
+.22: # ForPost@L31
+        k++
+        succs: 21
+
+.23: # IfThen@L32
+        succs: 16
+
+.24: # IfDone@L32
+        j == k
+        succs: 26 27
+
+.25: # Unreachable@L33
+        succs: 24
+
+.26: # IfThen@L35
+        succs: 22
+
+.27: # IfDone@L35
+        z += j * k
+        succs: 22
+
+.28: # Unreachable@L36
+        succs: 27
+
+.29: # IfThen@L51
+        x > y
+        succs: 32 34
+
+.30: # IfDone@L51
+        return z
+
+.31: # IfElse@L51
+        z = 10
+        succs: 30
+
+.32: # IfThen@L52
+        z += x
+        succs: 33
+
+.33: # IfDone@L52
+        succs: 30
+
+.34: # IfElse@L52
+        z -= y
+        succs: 33
+
+.35: # Unreachable@L61
+
+
+.0: # Body@L64
+        result := complexFunction(2, 3)
+        fmt.Println("Result:", result)
+        return

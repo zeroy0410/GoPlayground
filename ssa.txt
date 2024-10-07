@@ -1,0 +1,112 @@
+Function: init
+*ssa.UnOp: *init$guard
+*ssa.If: if t0 goto 2 else 1
+*ssa.Store: *init$guard = true:bool
+*ssa.Call: fmt.init()
+*ssa.Jump: jump 2
+*ssa.Return: return
+
+Function: complexFunction
+*ssa.Alloc: local int ()
+*ssa.BinOp: x * y
+*ssa.Jump: jump 1
+*ssa.Phi: phi [0: t1, 5: t10] #z
+*ssa.Phi: phi [0: 0:int, 5: t11] #i
+*ssa.BinOp: t3 < 5:int
+*ssa.If: if t4 goto 2 else 3
+*ssa.BinOp: t3 % 2:int
+*ssa.BinOp: t5 == 0:int
+*ssa.If: if t6 goto 4 else 6
+*ssa.BinOp: t2 % 3:int
+*ssa.BinOp: t7 == 0:int
+*ssa.If: if t8 goto 8 else 10
+*ssa.BinOp: t2 + t3
+*ssa.Jump: jump 5
+*ssa.Phi: phi [4: t9, 6: t12] #z
+*ssa.BinOp: t3 + 1:int
+*ssa.Jump: jump 1
+*ssa.BinOp: t2 - t3
+*ssa.Jump: jump 5
+*ssa.Jump: jump 12
+*ssa.Alloc: new [1]any (varargs)
+*ssa.IndexAddr: &t13[0:int]
+*ssa.MakeInterface: make any <- string ("z is divisible by 3":string)
+*ssa.Store: *t14 = t15
+*ssa.Slice: slice t13[:]
+*ssa.Call: fmt.Println(t16...)
+*ssa.Jump: jump 7
+*ssa.Alloc: new [1]any (varargs)
+*ssa.IndexAddr: &t18[0:int]
+*ssa.MakeInterface: make any <- string ("z has a remainder...":string)
+*ssa.Store: *t19 = t20
+*ssa.Slice: slice t18[:]
+*ssa.Call: fmt.Println(t21...)
+*ssa.Jump: jump 7
+*ssa.BinOp: t7 == 1:int
+*ssa.If: if t23 goto 9 else 11
+*ssa.Alloc: new [1]any (varargs)
+*ssa.IndexAddr: &t24[0:int]
+*ssa.MakeInterface: make any <- string ("z has a remainder...":string)
+*ssa.Store: *t25 = t26
+*ssa.Slice: slice t24[:]
+*ssa.Call: fmt.Println(t27...)
+*ssa.Jump: jump 7
+*ssa.Phi: phi [7: t2, 18: t39] #z
+*ssa.Phi: phi [7: 0:int, 18: t46] #j
+*ssa.BinOp: t30 < 3:int
+*ssa.If: if t31 goto 13 else 14
+*ssa.Jump: jump 15
+*ssa.Phi: phi [12: t29, 16: t39] #z
+*ssa.Alloc: new [1]any (varargs)
+*ssa.IndexAddr: &t33[0:int]
+*ssa.MakeInterface: make any <- string ("Function executio...":string)
+*ssa.Store: *t34 = t35
+*ssa.Slice: slice t33[:]
+*ssa.Defer: defer fmt.Println(t36...)
+*ssa.Call: complexFunction$1()
+*ssa.BinOp: t32 > 10:int
+*ssa.If: if t38 goto 22 else 24
+*ssa.Phi: phi [13: t29, 17: t44] #z
+*ssa.Phi: phi [13: 0:int, 17: t45] #k
+*ssa.BinOp: t40 < 3:int
+*ssa.If: if t41 goto 16 else 18
+*ssa.BinOp: t30 + t40
+*ssa.BinOp: t42 == 3:int
+*ssa.If: if t43 goto 14 else 19
+*ssa.Phi: phi [19: t39, 20: t49] #z
+*ssa.BinOp: t40 + 1:int
+*ssa.Jump: jump 15
+*ssa.BinOp: t30 + 1:int
+*ssa.Jump: jump 12
+*ssa.BinOp: t30 == t40
+*ssa.If: if t47 goto 17 else 20
+*ssa.BinOp: t30 * t40
+*ssa.BinOp: t39 + t48
+*ssa.Jump: jump 17
+*ssa.UnOp: *t0
+*ssa.Return: return t50
+*ssa.BinOp: x > y
+*ssa.If: if t51 goto 25 else 26
+*ssa.Phi: phi [25: t54, 24: 10:int, 26: t55] #z
+*ssa.Store: *t0 = t52
+*ssa.RunDefers: rundefers
+*ssa.UnOp: *t0
+*ssa.Return: return t53
+*ssa.Jump: jump 23
+*ssa.BinOp: t32 + x
+*ssa.Jump: jump 23
+*ssa.BinOp: t32 - y
+*ssa.Jump: jump 23
+
+Function: main
+*ssa.Call: complexFunction(2:int, 3:int)
+*ssa.Alloc: new [2]any (varargs)
+*ssa.IndexAddr: &t1[0:int]
+*ssa.MakeInterface: make any <- string ("Result:":string)
+*ssa.Store: *t2 = t3
+*ssa.IndexAddr: &t1[1:int]
+*ssa.MakeInterface: make any <- int (t0)
+*ssa.Store: *t4 = t5
+*ssa.Slice: slice t1[:]
+*ssa.Call: fmt.Println(t6...)
+*ssa.Return: return
