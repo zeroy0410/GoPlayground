@@ -1,0 +1,69 @@
+Function: processValue
+Block: 0
+*ssa.TypeAssert: typeassert,ok v.(string)
+*ssa.Extract: t1 = extract t0 #0
+*ssa.Extract: t2 = extract t0 #1
+*ssa.If: if t2 goto 2 else 3
+
+Block: 1
+*ssa.Return: return
+
+Block: 2
+*ssa.Alloc: t3 = new [2]any (varargs)
+*ssa.IndexAddr: t4 = &t3[0:int]
+*ssa.MakeInterface: t5 = make any <- string ("String value:":string)
+*ssa.Store: *t4 = t5
+*ssa.IndexAddr: t6 = &t3[1:int]
+*ssa.Store: *t6 = v
+*ssa.Slice: t7 = slice t3[:]
+*ssa.Call: t8 = fmt.Println(t7...)
+*ssa.Jump: jump 1
+
+Block: 3
+*ssa.TypeAssert: typeassert,ok v.(int)
+*ssa.Extract: t10 = extract t9 #0
+*ssa.Extract: t11 = extract t9 #1
+*ssa.If: if t11 goto 4 else 5
+
+Block: 4
+*ssa.Alloc: t12 = new [2]any (varargs)
+*ssa.IndexAddr: t13 = &t12[0:int]
+*ssa.MakeInterface: t14 = make any <- string ("Integer value:":string)
+*ssa.Store: *t13 = t14
+*ssa.IndexAddr: t15 = &t12[1:int]
+*ssa.Store: *t15 = v
+*ssa.Slice: t16 = slice t12[:]
+*ssa.Call: t17 = fmt.Println(t16...)
+*ssa.Jump: jump 1
+
+Block: 5
+*ssa.Alloc: t18 = new [1]any (varargs)
+*ssa.IndexAddr: t19 = &t18[0:int]
+*ssa.MakeInterface: t20 = make any <- string ("Unknown type":string)
+*ssa.Store: *t19 = t20
+*ssa.Slice: t21 = slice t18[:]
+*ssa.Call: t22 = fmt.Println(t21...)
+*ssa.Jump: jump 1
+
+
+Function: main
+Block: 0
+*ssa.MakeInterface: t0 = make interface{} <- bool (true:bool)
+*ssa.Call: t1 = processValue(t0)
+*ssa.Return: return
+
+
+Function: init
+Block: 0
+*ssa.UnOp: t0 = *init$guard
+*ssa.If: if t0 goto 2 else 1
+
+Block: 1
+*ssa.Store: *init$guard = true:bool
+*ssa.Call: t1 = fmt.init()
+*ssa.Jump: jump 2
+
+Block: 2
+*ssa.Return: return
+
+

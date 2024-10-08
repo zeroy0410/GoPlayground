@@ -1,0 +1,45 @@
+Function: main
+Block: 0
+*ssa.Call: t0 = math/rand.Int()
+*ssa.BinOp: t1 = t0 % 2:int
+*ssa.BinOp: t2 = t1 == 0:int
+*ssa.If: if t2 goto 1 else 3
+
+Block: 1
+*ssa.BinOp: t3 = 114:int + 514:int
+*ssa.BinOp: t4 = t3 + 114:int
+*ssa.Jump: jump 2
+
+Block: 2
+*ssa.Phi: t5 = phi [1: t3, 3: t13] #a
+*ssa.Phi: t6 = phi [1: 12:int, 3: t14] #c
+*ssa.BinOp: t7 = t6 + t5
+*ssa.Alloc: t8 = new [1]any (varargs)
+*ssa.IndexAddr: t9 = &t8[0:int]
+*ssa.MakeInterface: t10 = make any <- int (t7)
+*ssa.Store: *t9 = t10
+*ssa.Slice: t11 = slice t8[:]
+*ssa.Call: t12 = fmt.Println(t11...)
+*ssa.Return: return
+
+Block: 3
+*ssa.BinOp: t13 = 4:int + 2:int
+*ssa.BinOp: t14 = 514:int + 1:int
+*ssa.Jump: jump 2
+
+
+Function: init
+Block: 0
+*ssa.UnOp: t0 = *init$guard
+*ssa.If: if t0 goto 2 else 1
+
+Block: 1
+*ssa.Store: *init$guard = true:bool
+*ssa.Call: t1 = fmt.init()
+*ssa.Call: t2 = math/rand.init()
+*ssa.Jump: jump 2
+
+Block: 2
+*ssa.Return: return
+
+

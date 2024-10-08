@@ -1,0 +1,171 @@
+Function: init
+Block: 0
+*ssa.UnOp: t0 = *init$guard
+*ssa.If: if t0 goto 2 else 1
+
+Block: 1
+*ssa.Store: *init$guard = true:bool
+*ssa.Call: t1 = fmt.init()
+*ssa.Call: t2 = time.init()
+*ssa.MakeMap: t3 = make map[Worker]int 2:int
+*ssa.Alloc: t4 = local Person (complit)
+*ssa.FieldAddr: t5 = &t4.Name [#0]
+*ssa.FieldAddr: t6 = &t4.Age [#1]
+*ssa.Store: *t5 = "Alice":string
+*ssa.Store: *t6 = 30:int
+*ssa.UnOp: t7 = *t4
+*ssa.MakeInterface: t8 = make Worker <- Person (t7)
+*ssa.MapUpdate: t3[t8] = 50000:int
+*ssa.Alloc: t9 = local Person (complit)
+*ssa.FieldAddr: t10 = &t9.Name [#0]
+*ssa.FieldAddr: t11 = &t9.Age [#1]
+*ssa.Store: *t10 = "Bob":string
+*ssa.Store: *t11 = 25:int
+*ssa.UnOp: t12 = *t9
+*ssa.MakeInterface: t13 = make Worker <- Person (t12)
+*ssa.MapUpdate: t3[t13] = 40000:int
+*ssa.Store: *salaries = t3
+*ssa.Jump: jump 2
+
+Block: 2
+*ssa.Return: return
+
+
+Function: Run
+Block: 0
+*ssa.Call: t0 = invoke p.Work()
+*ssa.Return: return
+
+
+Function: handleCommunications
+Block: 0
+*ssa.Jump: jump 1
+
+Block: 1
+*ssa.Call: t0 = time.After(5000000000:time.Duration)
+*ssa.Select: t1 = select blocking [<-c1, <-c2, <-t0]
+*ssa.Extract: t2 = extract t1 #0
+*ssa.BinOp: t3 = t2 == 0:int
+*ssa.If: if t3 goto 2 else 3
+
+Block: 2
+*ssa.Extract: t4 = extract t1 #2
+*ssa.Alloc: t5 = new [2]any (varargs)
+*ssa.IndexAddr: t6 = &t5[0:int]
+*ssa.MakeInterface: t7 = make any <- string ("Received from cha...":string)
+*ssa.Store: *t6 = t7
+*ssa.IndexAddr: t8 = &t5[1:int]
+*ssa.MakeInterface: t9 = make any <- string (t4)
+*ssa.Store: *t8 = t9
+*ssa.Slice: t10 = slice t5[:]
+*ssa.Call: t11 = fmt.Println(t10...)
+*ssa.Jump: jump 1
+
+Block: 3
+*ssa.BinOp: t12 = t2 == 1:int
+*ssa.If: if t12 goto 4 else 5
+
+Block: 4
+*ssa.Extract: t13 = extract t1 #3
+*ssa.Alloc: t14 = new [2]any (varargs)
+*ssa.IndexAddr: t15 = &t14[0:int]
+*ssa.MakeInterface: t16 = make any <- string ("Received from cha...":string)
+*ssa.Store: *t15 = t16
+*ssa.IndexAddr: t17 = &t14[1:int]
+*ssa.MakeInterface: t18 = make any <- string (t13)
+*ssa.Store: *t17 = t18
+*ssa.Slice: t19 = slice t14[:]
+*ssa.Call: t20 = fmt.Println(t19...)
+*ssa.Jump: jump 1
+
+Block: 5
+*ssa.BinOp: t21 = t2 == 2:int
+*ssa.If: if t21 goto 6 else 7
+
+Block: 6
+*ssa.Alloc: t22 = new [1]any (varargs)
+*ssa.IndexAddr: t23 = &t22[0:int]
+*ssa.MakeInterface: t24 = make any <- string ("Timed out waiting...":string)
+*ssa.Store: *t23 = t24
+*ssa.Slice: t25 = slice t22[:]
+*ssa.Call: t26 = fmt.Println(t25...)
+*ssa.Return: return
+
+Block: 7
+*ssa.MakeInterface: t27 = make interface{} <- string ("blocking select m...":string)
+*ssa.Panic: panic t27
+
+
+Function: main
+Block: 0
+*ssa.Alloc: t0 = new chan string (ch1)
+*ssa.MakeChan: t1 = make chan string 0:int
+*ssa.Store: *t0 = t1
+*ssa.Alloc: t2 = new chan string (ch2)
+*ssa.MakeChan: t3 = make chan string 0:int
+*ssa.Store: *t2 = t3
+*ssa.Alloc: t4 = new string (x)
+*ssa.Store: *t4 = "I am X!":string
+*ssa.MakeClosure: t5 = make closure main$1 [t4, t0]
+*ssa.Go: go t5()
+*ssa.MakeClosure: t6 = make closure main$2 [t2]
+*ssa.Go: go t6()
+*ssa.UnOp: t7 = *t0
+*ssa.UnOp: t8 = *t2
+*ssa.ChangeType: t9 = changetype <-chan string <- chan string (t7)
+*ssa.ChangeType: t10 = changetype <-chan string <- chan string (t8)
+*ssa.Go: go handleCommunications(t9, t10)
+*ssa.Alloc: t11 = local Person (worker)
+*ssa.FieldAddr: t12 = &t11.Name [#0]
+*ssa.FieldAddr: t13 = &t11.Age [#1]
+*ssa.Store: *t12 = "Charlie":string
+*ssa.Store: *t13 = 35:int
+*ssa.Alloc: t14 = local Student (student)
+*ssa.FieldAddr: t15 = &t14.Name [#0]
+*ssa.FieldAddr: t16 = &t14.Age [#1]
+*ssa.Store: *t15 = "Student":string
+*ssa.Store: *t16 = 18:int
+*ssa.UnOp: t17 = *t11
+*ssa.MakeInterface: t18 = make Worker <- Person (t17)
+*ssa.Call: t19 = Run(t18)
+*ssa.UnOp: t20 = *t14
+*ssa.MakeInterface: t21 = make Worker <- Student (t20)
+*ssa.Call: t22 = Run(t21)
+*ssa.UnOp: t23 = *salaries
+*ssa.UnOp: t24 = *t11
+*ssa.MakeInterface: t25 = make Worker <- Person (t24)
+*ssa.Lookup: t26 = t23[t25],ok
+*ssa.Extract: t27 = extract t26 #0
+*ssa.Extract: t28 = extract t26 #1
+*ssa.If: if t28 goto 1 else 3
+
+Block: 1
+*ssa.FieldAddr: t29 = &t11.Name [#0]
+*ssa.UnOp: t30 = *t29
+*ssa.Alloc: t31 = new [2]any (varargs)
+*ssa.IndexAddr: t32 = &t31[0:int]
+*ssa.MakeInterface: t33 = make any <- string (t30)
+*ssa.Store: *t32 = t33
+*ssa.IndexAddr: t34 = &t31[1:int]
+*ssa.MakeInterface: t35 = make any <- int (t27)
+*ssa.Store: *t34 = t35
+*ssa.Slice: t36 = slice t31[:]
+*ssa.Call: t37 = fmt.Printf("%s's salary is $%d\n":string, t36...)
+*ssa.Jump: jump 2
+
+Block: 2
+*ssa.Call: t38 = time.Sleep(10000000000:time.Duration)
+*ssa.Return: return
+
+Block: 3
+*ssa.FieldAddr: t39 = &t11.Name [#0]
+*ssa.UnOp: t40 = *t39
+*ssa.Alloc: t41 = new [1]any (varargs)
+*ssa.IndexAddr: t42 = &t41[0:int]
+*ssa.MakeInterface: t43 = make any <- string (t40)
+*ssa.Store: *t42 = t43
+*ssa.Slice: t44 = slice t41[:]
+*ssa.Call: t45 = fmt.Printf("%s's salary is no...":string, t44...)
+*ssa.Jump: jump 2
+
+
