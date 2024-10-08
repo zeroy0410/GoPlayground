@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"go/ast"
 	"go/parser"
 	"go/token"
 	"log"
@@ -13,10 +14,27 @@ import (
 	"golang.org/x/tools/go/ssa/ssautil"
 )
 
+var lineToVars = make(map[int][]string)
+
+// extractVariablesFromPos extracts all variable names that appear on a specific line.
+func extractVariablesFromPos(fset *token.FileSet, node ast.Node) {
+	// Inspect the AST of the parsed source code
+	ast.Inspect(node, func(n ast.Node) bool {
+		// Check if the node is an identifier
+		if ident, ok := n.(*ast.Ident); ok {
+			pos := fset.Position(ident.Pos())
+			lineToVars[pos.Line] = append(lineToVars[pos.Line], ident.Name)
+		}
+		return true
+	})
+}
+
 func PrintInstr(instr ssa.Instruction) {
 	switch instr.(type) {
 	case *ssa.BinOp:
 		fmt.Printf("%T: %s = %s\n", instr, instr.(*ssa.BinOp).Name(), instr.String())
+		position := fset.Position(instr.(*ssa.BinOp).Pos())
+		fmt.Println(lineToVars[position.Line])
 	case *ssa.Call:
 		fmt.Printf("%T: %s = %s\n", instr, instr.(*ssa.Call).Name(), instr.String())
 	case *ssa.FieldAddr:
@@ -54,6 +72,8 @@ func PrintInstr(instr ssa.Instruction) {
 	}
 }
 
+var fset *token.FileSet
+
 func main() {
 	// 使用flag包来解析命令行参数
 	inputFile := flag.String("file", "", "Go source file to parse")
@@ -66,13 +86,15 @@ func main() {
 	}
 	// 创建文件集
 	// 创建新文件集
-	fset := token.NewFileSet()
+	fset = token.NewFileSet()
 
 	// 解析Go源代码
 	file, err := parser.ParseFile(fset, *inputFile, nil, parser.ParseComments)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	extractVariablesFromPos(fset, file) // 建立一个行号到变量名的映射
 
 	// 设置类型检查器配置
 	conf := loader.Config{Fset: fset}
