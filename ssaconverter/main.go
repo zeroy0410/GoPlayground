@@ -14,16 +14,16 @@ import (
 	"golang.org/x/tools/go/ssa/ssautil"
 )
 
-var lineToVars = make(map[int][]string)
+var LineToVars = make(map[int][]string)
 
 // extractVariablesFromPos extracts all variable names that appear on a specific line.
-func extractVariablesFromPos(fset *token.FileSet, node ast.Node) {
+func InitLineToVars(fset *token.FileSet, node ast.Node) {
 	// Inspect the AST of the parsed source code
 	ast.Inspect(node, func(n ast.Node) bool {
 		// Check if the node is an identifier
 		if ident, ok := n.(*ast.Ident); ok {
 			pos := fset.Position(ident.Pos())
-			lineToVars[pos.Line] = append(lineToVars[pos.Line], ident.Name)
+			LineToVars[pos.Line] = append(LineToVars[pos.Line], ident.Name)
 		}
 		return true
 	})
@@ -34,7 +34,7 @@ func PrintInstr(instr ssa.Instruction) {
 	case *ssa.BinOp:
 		fmt.Printf("%T: %s = %s\n", instr, instr.(*ssa.BinOp).Name(), instr.String())
 		position := fset.Position(instr.(*ssa.BinOp).Pos())
-		fmt.Println(lineToVars[position.Line])
+		fmt.Println(LineToVars[position.Line])
 	case *ssa.Call:
 		fmt.Printf("%T: %s = %s\n", instr, instr.(*ssa.Call).Name(), instr.String())
 	case *ssa.FieldAddr:
@@ -94,7 +94,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	extractVariablesFromPos(fset, file) // 建立一个行号到变量名的映射
+	InitLineToVars(fset, file) // 建立一个行号到变量名的映射
 
 	// 设置类型检查器配置
 	conf := loader.Config{Fset: fset}
