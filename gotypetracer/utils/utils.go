@@ -48,6 +48,8 @@ func PrintInstr(instr ssa.Instruction, fset *token.FileSet) {
 		fmt.Printf("%T: %s = %s\n", instr, instr.(*ssa.Lookup).Name(), instr.String())
 	case *ssa.Phi:
 		fmt.Printf("%T: %s = %s\n", instr, instr.(*ssa.Phi).Name(), instr.String())
+	case *ssa.TypeAssert:
+		fmt.Printf("%T: %s = %s\n", instr, instr.(*ssa.TypeAssert).Name(), instr.String())
 	default:
 		fmt.Printf("%T: %s\n", instr, instr.String())
 	}

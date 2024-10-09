@@ -2,6 +2,14 @@ package main
 
 import "fmt"
 
+
+type Bird interface {
+	Name string
+	Age  int
+}
+
+
+
 func processValue(v interface{}) {
 	switch v.(type) {
 	case string:

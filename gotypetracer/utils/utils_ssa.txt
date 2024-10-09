@@ -1,0 +1,594 @@
+Function: init
+Block: 0
+*ssa.UnOp: t0 = *init$guard
+*ssa.If: if t0 goto 2 else 1
+
+Block: 1
+*ssa.Store: *init$guard = true:bool
+*ssa.Call: t1 = fmt.init()
+*ssa.Call: t2 = go/ast.init()
+*ssa.Call: t3 = go/token.init()
+*ssa.Call: t4 = golang.org/x/tools/go/ssa.init()
+*ssa.MakeMap: t5 = make map[int][]string 
+*ssa.Store: *LineToVars = t5
+*ssa.Jump: jump 2
+
+Block: 2
+*ssa.Return: return
+
+
+Function: PrintInstr
+Block: 0
+*ssa.TypeAssert: t0 = typeassert,ok instr.(*golang.org/x/tools/go/ssa.BinOp)
+*ssa.Extract: t1 = extract t0 #0
+*ssa.Extract: t2 = extract t0 #1
+*ssa.If: if t2 goto 2 else 3
+
+Block: 1
+*ssa.Return: return
+
+Block: 2
+*ssa.TypeAssert: t3 = typeassert instr.(*golang.org/x/tools/go/ssa.BinOp)
+*ssa.FieldAddr: t4 = &t3.register [#0]
+*ssa.Call: t5 = (*golang.org/x/tools/go/ssa.register).Name(t4)
+*ssa.Call: t6 = invoke instr.String()
+*ssa.Alloc: t7 = new [3]any (varargs)
+*ssa.IndexAddr: t8 = &t7[0:int]
+*ssa.ChangeInterface: t9 = change interface any <- golang.org/x/tools/go/ssa.Instruction (instr)
+*ssa.Store: *t8 = t9
+*ssa.IndexAddr: t10 = &t7[1:int]
+*ssa.MakeInterface: t11 = make any <- string (t5)
+*ssa.Store: *t10 = t11
+*ssa.IndexAddr: t12 = &t7[2:int]
+*ssa.MakeInterface: t13 = make any <- string (t6)
+*ssa.Store: *t12 = t13
+*ssa.Slice: t14 = slice t7[:]
+*ssa.Call: t15 = fmt.Printf("%T: %s = %s\n":string, t14...)
+*ssa.Alloc: t16 = local go/token.Position (position)
+*ssa.TypeAssert: t17 = typeassert instr.(*golang.org/x/tools/go/ssa.BinOp)
+*ssa.FieldAddr: t18 = &t17.register [#0]
+*ssa.Call: t19 = (*golang.org/x/tools/go/ssa.register).Pos(t18)
+*ssa.Call: t20 = (*go/token.FileSet).Position(fset, t19)
+*ssa.Store: *t16 = t20
+*ssa.UnOp: t21 = *LineToVars
+*ssa.FieldAddr: t22 = &t16.Line [#2]
+*ssa.UnOp: t23 = *t22
+*ssa.Lookup: t24 = t21[t23]
+*ssa.Alloc: t25 = new [1]any (varargs)
+*ssa.IndexAddr: t26 = &t25[0:int]
+*ssa.MakeInterface: t27 = make any <- []string (t24)
+*ssa.Store: *t26 = t27
+*ssa.Slice: t28 = slice t25[:]
+*ssa.Call: t29 = fmt.Println(t28...)
+*ssa.Jump: jump 1
+
+Block: 3
+*ssa.TypeAssert: t30 = typeassert,ok instr.(*golang.org/x/tools/go/ssa.Call)
+*ssa.Extract: t31 = extract t30 #0
+*ssa.Extract: t32 = extract t30 #1
+*ssa.If: if t32 goto 4 else 5
+
+Block: 4
+*ssa.TypeAssert: t33 = typeassert instr.(*golang.org/x/tools/go/ssa.Call)
+*ssa.FieldAddr: t34 = &t33.register [#0]
+*ssa.Call: t35 = (*golang.org/x/tools/go/ssa.register).Name(t34)
+*ssa.Call: t36 = invoke instr.String()
+*ssa.Alloc: t37 = new [3]any (varargs)
+*ssa.IndexAddr: t38 = &t37[0:int]
+*ssa.ChangeInterface: t39 = change interface any <- golang.org/x/tools/go/ssa.Instruction (instr)
+*ssa.Store: *t38 = t39
+*ssa.IndexAddr: t40 = &t37[1:int]
+*ssa.MakeInterface: t41 = make any <- string (t35)
+*ssa.Store: *t40 = t41
+*ssa.IndexAddr: t42 = &t37[2:int]
+*ssa.MakeInterface: t43 = make any <- string (t36)
+*ssa.Store: *t42 = t43
+*ssa.Slice: t44 = slice t37[:]
+*ssa.Call: t45 = fmt.Printf("%T: %s = %s\n":string, t44...)
+*ssa.Jump: jump 1
+
+Block: 5
+*ssa.TypeAssert: t46 = typeassert,ok instr.(*golang.org/x/tools/go/ssa.FieldAddr)
+*ssa.Extract: t47 = extract t46 #0
+*ssa.Extract: t48 = extract t46 #1
+*ssa.If: if t48 goto 6 else 7
+
+Block: 6
+*ssa.TypeAssert: t49 = typeassert instr.(*golang.org/x/tools/go/ssa.FieldAddr)
+*ssa.FieldAddr: t50 = &t49.register [#0]
+*ssa.Call: t51 = (*golang.org/x/tools/go/ssa.register).Name(t50)
+*ssa.Call: t52 = invoke instr.String()
+*ssa.Alloc: t53 = new [3]any (varargs)
+*ssa.IndexAddr: t54 = &t53[0:int]
+*ssa.ChangeInterface: t55 = change interface any <- golang.org/x/tools/go/ssa.Instruction (instr)
+*ssa.Store: *t54 = t55
+*ssa.IndexAddr: t56 = &t53[1:int]
+*ssa.MakeInterface: t57 = make any <- string (t51)
+*ssa.Store: *t56 = t57
+*ssa.IndexAddr: t58 = &t53[2:int]
+*ssa.MakeInterface: t59 = make any <- string (t52)
+*ssa.Store: *t58 = t59
+*ssa.Slice: t60 = slice t53[:]
+*ssa.Call: t61 = fmt.Printf("%T: %s = %s\n":string, t60...)
+*ssa.Jump: jump 1
+
+Block: 7
+*ssa.TypeAssert: t62 = typeassert,ok instr.(*golang.org/x/tools/go/ssa.UnOp)
+*ssa.Extract: t63 = extract t62 #0
+*ssa.Extract: t64 = extract t62 #1
+*ssa.If: if t64 goto 8 else 9
+
+Block: 8
+*ssa.TypeAssert: t65 = typeassert instr.(*golang.org/x/tools/go/ssa.UnOp)
+*ssa.FieldAddr: t66 = &t65.register [#0]
+*ssa.Call: t67 = (*golang.org/x/tools/go/ssa.register).Name(t66)
+*ssa.Call: t68 = invoke instr.String()
+*ssa.Alloc: t69 = new [3]any (varargs)
+*ssa.IndexAddr: t70 = &t69[0:int]
+*ssa.ChangeInterface: t71 = change interface any <- golang.org/x/tools/go/ssa.Instruction (instr)
+*ssa.Store: *t70 = t71
+*ssa.IndexAddr: t72 = &t69[1:int]
+*ssa.MakeInterface: t73 = make any <- string (t67)
+*ssa.Store: *t72 = t73
+*ssa.IndexAddr: t74 = &t69[2:int]
+*ssa.MakeInterface: t75 = make any <- string (t68)
+*ssa.Store: *t74 = t75
+*ssa.Slice: t76 = slice t69[:]
+*ssa.Call: t77 = fmt.Printf("%T: %s = %s\n":string, t76...)
+*ssa.Jump: jump 1
+
+Block: 9
+*ssa.TypeAssert: t78 = typeassert,ok instr.(*golang.org/x/tools/go/ssa.Alloc)
+*ssa.Extract: t79 = extract t78 #0
+*ssa.Extract: t80 = extract t78 #1
+*ssa.If: if t80 goto 10 else 11
+
+Block: 10
+*ssa.TypeAssert: t81 = typeassert instr.(*golang.org/x/tools/go/ssa.Alloc)
+*ssa.FieldAddr: t82 = &t81.register [#0]
+*ssa.Call: t83 = (*golang.org/x/tools/go/ssa.register).Name(t82)
+*ssa.Call: t84 = invoke instr.String()
+*ssa.Alloc: t85 = new [3]any (varargs)
+*ssa.IndexAddr: t86 = &t85[0:int]
+*ssa.ChangeInterface: t87 = change interface any <- golang.org/x/tools/go/ssa.Instruction (instr)
+*ssa.Store: *t86 = t87
+*ssa.IndexAddr: t88 = &t85[1:int]
+*ssa.MakeInterface: t89 = make any <- string (t83)
+*ssa.Store: *t88 = t89
+*ssa.IndexAddr: t90 = &t85[2:int]
+*ssa.MakeInterface: t91 = make any <- string (t84)
+*ssa.Store: *t90 = t91
+*ssa.Slice: t92 = slice t85[:]
+*ssa.Call: t93 = fmt.Printf("%T: %s = %s\n":string, t92...)
+*ssa.Jump: jump 1
+
+Block: 11
+*ssa.TypeAssert: t94 = typeassert,ok instr.(*golang.org/x/tools/go/ssa.IndexAddr)
+*ssa.Extract: t95 = extract t94 #0
+*ssa.Extract: t96 = extract t94 #1
+*ssa.If: if t96 goto 12 else 13
+
+Block: 12
+*ssa.TypeAssert: t97 = typeassert instr.(*golang.org/x/tools/go/ssa.IndexAddr)
+*ssa.FieldAddr: t98 = &t97.register [#0]
+*ssa.Call: t99 = (*golang.org/x/tools/go/ssa.register).Name(t98)
+*ssa.Call: t100 = invoke instr.String()
+*ssa.Alloc: t101 = new [3]any (varargs)
+*ssa.IndexAddr: t102 = &t101[0:int]
+*ssa.ChangeInterface: t103 = change interface any <- golang.org/x/tools/go/ssa.Instruction (instr)
+*ssa.Store: *t102 = t103
+*ssa.IndexAddr: t104 = &t101[1:int]
+*ssa.MakeInterface: t105 = make any <- string (t99)
+*ssa.Store: *t104 = t105
+*ssa.IndexAddr: t106 = &t101[2:int]
+*ssa.MakeInterface: t107 = make any <- string (t100)
+*ssa.Store: *t106 = t107
+*ssa.Slice: t108 = slice t101[:]
+*ssa.Call: t109 = fmt.Printf("%T: %s = %s\n":string, t108...)
+*ssa.Jump: jump 1
+
+Block: 13
+*ssa.TypeAssert: t110 = typeassert,ok instr.(*golang.org/x/tools/go/ssa.MakeInterface)
+*ssa.Extract: t111 = extract t110 #0
+*ssa.Extract: t112 = extract t110 #1
+*ssa.If: if t112 goto 14 else 15
+
+Block: 14
+*ssa.TypeAssert: t113 = typeassert instr.(*golang.org/x/tools/go/ssa.MakeInterface)
+*ssa.FieldAddr: t114 = &t113.register [#0]
+*ssa.Call: t115 = (*golang.org/x/tools/go/ssa.register).Name(t114)
+*ssa.Call: t116 = invoke instr.String()
+*ssa.Alloc: t117 = new [3]any (varargs)
+*ssa.IndexAddr: t118 = &t117[0:int]
+*ssa.ChangeInterface: t119 = change interface any <- golang.org/x/tools/go/ssa.Instruction (instr)
+*ssa.Store: *t118 = t119
+*ssa.IndexAddr: t120 = &t117[1:int]
+*ssa.MakeInterface: t121 = make any <- string (t115)
+*ssa.Store: *t120 = t121
+*ssa.IndexAddr: t122 = &t117[2:int]
+*ssa.MakeInterface: t123 = make any <- string (t116)
+*ssa.Store: *t122 = t123
+*ssa.Slice: t124 = slice t117[:]
+*ssa.Call: t125 = fmt.Printf("%T: %s = %s\n":string, t124...)
+*ssa.Jump: jump 1
+
+Block: 15
+*ssa.TypeAssert: t126 = typeassert,ok instr.(*golang.org/x/tools/go/ssa.Slice)
+*ssa.Extract: t127 = extract t126 #0
+*ssa.Extract: t128 = extract t126 #1
+*ssa.If: if t128 goto 16 else 17
+
+Block: 16
+*ssa.TypeAssert: t129 = typeassert instr.(*golang.org/x/tools/go/ssa.Slice)
+*ssa.FieldAddr: t130 = &t129.register [#0]
+*ssa.Call: t131 = (*golang.org/x/tools/go/ssa.register).Name(t130)
+*ssa.Call: t132 = invoke instr.String()
+*ssa.Alloc: t133 = new [3]any (varargs)
+*ssa.IndexAddr: t134 = &t133[0:int]
+*ssa.ChangeInterface: t135 = change interface any <- golang.org/x/tools/go/ssa.Instruction (instr)
+*ssa.Store: *t134 = t135
+*ssa.IndexAddr: t136 = &t133[1:int]
+*ssa.MakeInterface: t137 = make any <- string (t131)
+*ssa.Store: *t136 = t137
+*ssa.IndexAddr: t138 = &t133[2:int]
+*ssa.MakeInterface: t139 = make any <- string (t132)
+*ssa.Store: *t138 = t139
+*ssa.Slice: t140 = slice t133[:]
+*ssa.Call: t141 = fmt.Printf("%T: %s = %s\n":string, t140...)
+*ssa.Jump: jump 1
+
+Block: 17
+*ssa.TypeAssert: t142 = typeassert,ok instr.(*golang.org/x/tools/go/ssa.MakeMap)
+*ssa.Extract: t143 = extract t142 #0
+*ssa.Extract: t144 = extract t142 #1
+*ssa.If: if t144 goto 18 else 19
+
+Block: 18
+*ssa.TypeAssert: t145 = typeassert instr.(*golang.org/x/tools/go/ssa.MakeMap)
+*ssa.FieldAddr: t146 = &t145.register [#0]
+*ssa.Call: t147 = (*golang.org/x/tools/go/ssa.register).Name(t146)
+*ssa.Call: t148 = invoke instr.String()
+*ssa.Alloc: t149 = new [3]any (varargs)
+*ssa.IndexAddr: t150 = &t149[0:int]
+*ssa.ChangeInterface: t151 = change interface any <- golang.org/x/tools/go/ssa.Instruction (instr)
+*ssa.Store: *t150 = t151
+*ssa.IndexAddr: t152 = &t149[1:int]
+*ssa.MakeInterface: t153 = make any <- string (t147)
+*ssa.Store: *t152 = t153
+*ssa.IndexAddr: t154 = &t149[2:int]
+*ssa.MakeInterface: t155 = make any <- string (t148)
+*ssa.Store: *t154 = t155
+*ssa.Slice: t156 = slice t149[:]
+*ssa.Call: t157 = fmt.Printf("%T: %s = %s\n":string, t156...)
+*ssa.Jump: jump 1
+
+Block: 19
+*ssa.TypeAssert: t158 = typeassert,ok instr.(*golang.org/x/tools/go/ssa.Extract)
+*ssa.Extract: t159 = extract t158 #0
+*ssa.Extract: t160 = extract t158 #1
+*ssa.If: if t160 goto 20 else 21
+
+Block: 20
+*ssa.TypeAssert: t161 = typeassert instr.(*golang.org/x/tools/go/ssa.Extract)
+*ssa.FieldAddr: t162 = &t161.register [#0]
+*ssa.Call: t163 = (*golang.org/x/tools/go/ssa.register).Name(t162)
+*ssa.Call: t164 = invoke instr.String()
+*ssa.Alloc: t165 = new [3]any (varargs)
+*ssa.IndexAddr: t166 = &t165[0:int]
+*ssa.ChangeInterface: t167 = change interface any <- golang.org/x/tools/go/ssa.Instruction (instr)
+*ssa.Store: *t166 = t167
+*ssa.IndexAddr: t168 = &t165[1:int]
+*ssa.MakeInterface: t169 = make any <- string (t163)
+*ssa.Store: *t168 = t169
+*ssa.IndexAddr: t170 = &t165[2:int]
+*ssa.MakeInterface: t171 = make any <- string (t164)
+*ssa.Store: *t170 = t171
+*ssa.Slice: t172 = slice t165[:]
+*ssa.Call: t173 = fmt.Printf("%T: %s = %s\n":string, t172...)
+*ssa.Jump: jump 1
+
+Block: 21
+*ssa.TypeAssert: t174 = typeassert,ok instr.(*golang.org/x/tools/go/ssa.MakeChan)
+*ssa.Extract: t175 = extract t174 #0
+*ssa.Extract: t176 = extract t174 #1
+*ssa.If: if t176 goto 22 else 23
+
+Block: 22
+*ssa.TypeAssert: t177 = typeassert instr.(*golang.org/x/tools/go/ssa.MakeChan)
+*ssa.FieldAddr: t178 = &t177.register [#0]
+*ssa.Call: t179 = (*golang.org/x/tools/go/ssa.register).Name(t178)
+*ssa.Call: t180 = invoke instr.String()
+*ssa.Alloc: t181 = new [3]any (varargs)
+*ssa.IndexAddr: t182 = &t181[0:int]
+*ssa.ChangeInterface: t183 = change interface any <- golang.org/x/tools/go/ssa.Instruction (instr)
+*ssa.Store: *t182 = t183
+*ssa.IndexAddr: t184 = &t181[1:int]
+*ssa.MakeInterface: t185 = make any <- string (t179)
+*ssa.Store: *t184 = t185
+*ssa.IndexAddr: t186 = &t181[2:int]
+*ssa.MakeInterface: t187 = make any <- string (t180)
+*ssa.Store: *t186 = t187
+*ssa.Slice: t188 = slice t181[:]
+*ssa.Call: t189 = fmt.Printf("%T: %s = %s\n":string, t188...)
+*ssa.Jump: jump 1
+
+Block: 23
+*ssa.TypeAssert: t190 = typeassert,ok instr.(*golang.org/x/tools/go/ssa.MakeClosure)
+*ssa.Extract: t191 = extract t190 #0
+*ssa.Extract: t192 = extract t190 #1
+*ssa.If: if t192 goto 24 else 25
+
+Block: 24
+*ssa.TypeAssert: t193 = typeassert instr.(*golang.org/x/tools/go/ssa.MakeClosure)
+*ssa.FieldAddr: t194 = &t193.register [#0]
+*ssa.Call: t195 = (*golang.org/x/tools/go/ssa.register).Name(t194)
+*ssa.Call: t196 = invoke instr.String()
+*ssa.Alloc: t197 = new [3]any (varargs)
+*ssa.IndexAddr: t198 = &t197[0:int]
+*ssa.ChangeInterface: t199 = change interface any <- golang.org/x/tools/go/ssa.Instruction (instr)
+*ssa.Store: *t198 = t199
+*ssa.IndexAddr: t200 = &t197[1:int]
+*ssa.MakeInterface: t201 = make any <- string (t195)
+*ssa.Store: *t200 = t201
+*ssa.IndexAddr: t202 = &t197[2:int]
+*ssa.MakeInterface: t203 = make any <- string (t196)
+*ssa.Store: *t202 = t203
+*ssa.Slice: t204 = slice t197[:]
+*ssa.Call: t205 = fmt.Printf("%T: %s = %s\n":string, t204...)
+*ssa.Jump: jump 1
+
+Block: 25
+*ssa.TypeAssert: t206 = typeassert,ok instr.(*golang.org/x/tools/go/ssa.ChangeType)
+*ssa.Extract: t207 = extract t206 #0
+*ssa.Extract: t208 = extract t206 #1
+*ssa.If: if t208 goto 26 else 27
+
+Block: 26
+*ssa.TypeAssert: t209 = typeassert instr.(*golang.org/x/tools/go/ssa.ChangeType)
+*ssa.FieldAddr: t210 = &t209.register [#0]
+*ssa.Call: t211 = (*golang.org/x/tools/go/ssa.register).Name(t210)
+*ssa.Call: t212 = invoke instr.String()
+*ssa.Alloc: t213 = new [3]any (varargs)
+*ssa.IndexAddr: t214 = &t213[0:int]
+*ssa.ChangeInterface: t215 = change interface any <- golang.org/x/tools/go/ssa.Instruction (instr)
+*ssa.Store: *t214 = t215
+*ssa.IndexAddr: t216 = &t213[1:int]
+*ssa.MakeInterface: t217 = make any <- string (t211)
+*ssa.Store: *t216 = t217
+*ssa.IndexAddr: t218 = &t213[2:int]
+*ssa.MakeInterface: t219 = make any <- string (t212)
+*ssa.Store: *t218 = t219
+*ssa.Slice: t220 = slice t213[:]
+*ssa.Call: t221 = fmt.Printf("%T: %s = %s\n":string, t220...)
+*ssa.Jump: jump 1
+
+Block: 27
+*ssa.TypeAssert: t222 = typeassert,ok instr.(*golang.org/x/tools/go/ssa.ChangeInterface)
+*ssa.Extract: t223 = extract t222 #0
+*ssa.Extract: t224 = extract t222 #1
+*ssa.If: if t224 goto 28 else 29
+
+Block: 28
+*ssa.TypeAssert: t225 = typeassert instr.(*golang.org/x/tools/go/ssa.ChangeInterface)
+*ssa.FieldAddr: t226 = &t225.register [#0]
+*ssa.Call: t227 = (*golang.org/x/tools/go/ssa.register).Name(t226)
+*ssa.Call: t228 = invoke instr.String()
+*ssa.Alloc: t229 = new [3]any (varargs)
+*ssa.IndexAddr: t230 = &t229[0:int]
+*ssa.ChangeInterface: t231 = change interface any <- golang.org/x/tools/go/ssa.Instruction (instr)
+*ssa.Store: *t230 = t231
+*ssa.IndexAddr: t232 = &t229[1:int]
+*ssa.MakeInterface: t233 = make any <- string (t227)
+*ssa.Store: *t232 = t233
+*ssa.IndexAddr: t234 = &t229[2:int]
+*ssa.MakeInterface: t235 = make any <- string (t228)
+*ssa.Store: *t234 = t235
+*ssa.Slice: t236 = slice t229[:]
+*ssa.Call: t237 = fmt.Printf("%T: %s = %s\n":string, t236...)
+*ssa.Jump: jump 1
+
+Block: 29
+*ssa.TypeAssert: t238 = typeassert,ok instr.(*golang.org/x/tools/go/ssa.Select)
+*ssa.Extract: t239 = extract t238 #0
+*ssa.Extract: t240 = extract t238 #1
+*ssa.If: if t240 goto 30 else 31
+
+Block: 30
+*ssa.TypeAssert: t241 = typeassert instr.(*golang.org/x/tools/go/ssa.Select)
+*ssa.FieldAddr: t242 = &t241.register [#0]
+*ssa.Call: t243 = (*golang.org/x/tools/go/ssa.register).Name(t242)
+*ssa.Call: t244 = invoke instr.String()
+*ssa.Alloc: t245 = new [3]any (varargs)
+*ssa.IndexAddr: t246 = &t245[0:int]
+*ssa.ChangeInterface: t247 = change interface any <- golang.org/x/tools/go/ssa.Instruction (instr)
+*ssa.Store: *t246 = t247
+*ssa.IndexAddr: t248 = &t245[1:int]
+*ssa.MakeInterface: t249 = make any <- string (t243)
+*ssa.Store: *t248 = t249
+*ssa.IndexAddr: t250 = &t245[2:int]
+*ssa.MakeInterface: t251 = make any <- string (t244)
+*ssa.Store: *t250 = t251
+*ssa.Slice: t252 = slice t245[:]
+*ssa.Call: t253 = fmt.Printf("%T: %s = %s\n":string, t252...)
+*ssa.Jump: jump 1
+
+Block: 31
+*ssa.TypeAssert: t254 = typeassert,ok instr.(*golang.org/x/tools/go/ssa.Lookup)
+*ssa.Extract: t255 = extract t254 #0
+*ssa.Extract: t256 = extract t254 #1
+*ssa.If: if t256 goto 32 else 33
+
+Block: 32
+*ssa.TypeAssert: t257 = typeassert instr.(*golang.org/x/tools/go/ssa.Lookup)
+*ssa.FieldAddr: t258 = &t257.register [#0]
+*ssa.Call: t259 = (*golang.org/x/tools/go/ssa.register).Name(t258)
+*ssa.Call: t260 = invoke instr.String()
+*ssa.Alloc: t261 = new [3]any (varargs)
+*ssa.IndexAddr: t262 = &t261[0:int]
+*ssa.ChangeInterface: t263 = change interface any <- golang.org/x/tools/go/ssa.Instruction (instr)
+*ssa.Store: *t262 = t263
+*ssa.IndexAddr: t264 = &t261[1:int]
+*ssa.MakeInterface: t265 = make any <- string (t259)
+*ssa.Store: *t264 = t265
+*ssa.IndexAddr: t266 = &t261[2:int]
+*ssa.MakeInterface: t267 = make any <- string (t260)
+*ssa.Store: *t266 = t267
+*ssa.Slice: t268 = slice t261[:]
+*ssa.Call: t269 = fmt.Printf("%T: %s = %s\n":string, t268...)
+*ssa.Jump: jump 1
+
+Block: 33
+*ssa.TypeAssert: t270 = typeassert,ok instr.(*golang.org/x/tools/go/ssa.Phi)
+*ssa.Extract: t271 = extract t270 #0
+*ssa.Extract: t272 = extract t270 #1
+*ssa.If: if t272 goto 34 else 35
+
+Block: 34
+*ssa.TypeAssert: t273 = typeassert instr.(*golang.org/x/tools/go/ssa.Phi)
+*ssa.FieldAddr: t274 = &t273.register [#0]
+*ssa.Call: t275 = (*golang.org/x/tools/go/ssa.register).Name(t274)
+*ssa.Call: t276 = invoke instr.String()
+*ssa.Alloc: t277 = new [3]any (varargs)
+*ssa.IndexAddr: t278 = &t277[0:int]
+*ssa.ChangeInterface: t279 = change interface any <- golang.org/x/tools/go/ssa.Instruction (instr)
+*ssa.Store: *t278 = t279
+*ssa.IndexAddr: t280 = &t277[1:int]
+*ssa.MakeInterface: t281 = make any <- string (t275)
+*ssa.Store: *t280 = t281
+*ssa.IndexAddr: t282 = &t277[2:int]
+*ssa.MakeInterface: t283 = make any <- string (t276)
+*ssa.Store: *t282 = t283
+*ssa.Slice: t284 = slice t277[:]
+*ssa.Call: t285 = fmt.Printf("%T: %s = %s\n":string, t284...)
+*ssa.Jump: jump 1
+
+Block: 35
+*ssa.TypeAssert: t286 = typeassert,ok instr.(*golang.org/x/tools/go/ssa.TypeAssert)
+*ssa.Extract: t287 = extract t286 #0
+*ssa.Extract: t288 = extract t286 #1
+*ssa.If: if t288 goto 36 else 37
+
+Block: 36
+*ssa.TypeAssert: t289 = typeassert instr.(*golang.org/x/tools/go/ssa.TypeAssert)
+*ssa.FieldAddr: t290 = &t289.register [#0]
+*ssa.Call: t291 = (*golang.org/x/tools/go/ssa.register).Name(t290)
+*ssa.Call: t292 = invoke instr.String()
+*ssa.Alloc: t293 = new [3]any (varargs)
+*ssa.IndexAddr: t294 = &t293[0:int]
+*ssa.ChangeInterface: t295 = change interface any <- golang.org/x/tools/go/ssa.Instruction (instr)
+*ssa.Store: *t294 = t295
+*ssa.IndexAddr: t296 = &t293[1:int]
+*ssa.MakeInterface: t297 = make any <- string (t291)
+*ssa.Store: *t296 = t297
+*ssa.IndexAddr: t298 = &t293[2:int]
+*ssa.MakeInterface: t299 = make any <- string (t292)
+*ssa.Store: *t298 = t299
+*ssa.Slice: t300 = slice t293[:]
+*ssa.Call: t301 = fmt.Printf("%T: %s = %s\n":string, t300...)
+*ssa.Jump: jump 1
+
+Block: 37
+*ssa.Call: t302 = invoke instr.String()
+*ssa.Alloc: t303 = new [2]any (varargs)
+*ssa.IndexAddr: t304 = &t303[0:int]
+*ssa.ChangeInterface: t305 = change interface any <- golang.org/x/tools/go/ssa.Instruction (instr)
+*ssa.Store: *t304 = t305
+*ssa.IndexAddr: t306 = &t303[1:int]
+*ssa.MakeInterface: t307 = make any <- string (t302)
+*ssa.Store: *t306 = t307
+*ssa.Slice: t308 = slice t303[:]
+*ssa.Call: t309 = fmt.Printf("%T: %s\n":string, t308...)
+*ssa.Jump: jump 1
+
+
+Function: InitLineToVars
+Block: 0
+*ssa.Alloc: t0 = new *go/token.FileSet (fset)
+*ssa.Store: *t0 = fset
+*ssa.MakeClosure: t1 = make closure InitLineToVars$1 [t0]
+*ssa.Call: t2 = go/ast.Inspect(node, t1)
+*ssa.Return: return
+
+
+Function: PrintAllFunc
+Block: 0
+*ssa.FieldAddr: t0 = &pkg.Members [#2]
+*ssa.UnOp: t1 = *t0
+*ssa.Range: range t1
+*ssa.Jump: jump 1
+
+Block: 1
+*ssa.Next: next t2
+*ssa.Extract: t4 = extract t3 #0
+*ssa.If: if t4 goto 2 else 3
+
+Block: 2
+*ssa.Extract: t5 = extract t3 #2
+*ssa.TypeAssert: t6 = typeassert,ok t5.(*golang.org/x/tools/go/ssa.Function)
+*ssa.Extract: t7 = extract t6 #0
+*ssa.Extract: t8 = extract t6 #1
+*ssa.If: if t8 goto 4 else 1
+
+Block: 3
+*ssa.Return: return
+
+Block: 4
+*ssa.Call: t9 = (*golang.org/x/tools/go/ssa.Function).Name(t7)
+*ssa.Alloc: t10 = new [1]any (varargs)
+*ssa.IndexAddr: t11 = &t10[0:int]
+*ssa.MakeInterface: t12 = make any <- string (t9)
+*ssa.Store: *t11 = t12
+*ssa.Slice: t13 = slice t10[:]
+*ssa.Call: t14 = fmt.Printf("Function: %s\n":string, t13...)
+*ssa.FieldAddr: t15 = &t7.Blocks [#16]
+*ssa.UnOp: t16 = *t15
+*ssa.Call: t17 = len(t16)
+*ssa.Jump: jump 5
+
+Block: 5
+*ssa.Phi: t18 = phi [4: -1:int, 10: t19] #rangeindex
+*ssa.BinOp: t19 = t18 + 1:int
+[]
+*ssa.BinOp: t20 = t19 < t17
+[]
+*ssa.If: if t20 goto 6 else 7
+
+Block: 6
+*ssa.IndexAddr: t21 = &t16[t19]
+*ssa.UnOp: t22 = *t21
+*ssa.FieldAddr: t23 = &t22.Index [#0]
+*ssa.UnOp: t24 = *t23
+*ssa.Alloc: t25 = new [1]any (varargs)
+*ssa.IndexAddr: t26 = &t25[0:int]
+*ssa.MakeInterface: t27 = make any <- int (t24)
+*ssa.Store: *t26 = t27
+*ssa.Slice: t28 = slice t25[:]
+*ssa.Call: t29 = fmt.Printf("Block: %d\n":string, t28...)
+*ssa.FieldAddr: t30 = &t22.Instrs [#3]
+*ssa.UnOp: t31 = *t30
+*ssa.Call: t32 = len(t31)
+*ssa.Jump: jump 8
+
+Block: 7
+*ssa.Call: t33 = fmt.Println(nil:[]any...)
+*ssa.Jump: jump 1
+
+Block: 8
+*ssa.Phi: t34 = phi [6: -1:int, 9: t35] #rangeindex
+*ssa.BinOp: t35 = t34 + 1:int
+[]
+*ssa.BinOp: t36 = t35 < t32
+[]
+*ssa.If: if t36 goto 9 else 10
+
+Block: 9
+*ssa.IndexAddr: t37 = &t31[t35]
+*ssa.UnOp: t38 = *t37
+*ssa.Call: t39 = PrintInstr(t38, fset)
+*ssa.Jump: jump 8
+
+Block: 10
+*ssa.Call: t40 = fmt.Println(nil:[]any...)
+*ssa.Jump: jump 5
+
+

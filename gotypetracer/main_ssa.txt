@@ -1,0 +1,108 @@
+Function: init
+Block: 0
+*ssa.UnOp: t0 = *init$guard
+*ssa.If: if t0 goto 2 else 1
+
+Block: 1
+*ssa.Store: *init$guard = true:bool
+*ssa.Call: t1 = flag.init()
+*ssa.Call: t2 = fmt.init()
+*ssa.Call: t3 = go/parser.init()
+*ssa.Call: t4 = go/token.init()
+*ssa.Call: t5 = gotypetracer/utils.init()
+*ssa.Call: t6 = log.init()
+*ssa.Call: t7 = os.init()
+*ssa.Call: t8 = golang.org/x/tools/go/loader.init()
+*ssa.Call: t9 = golang.org/x/tools/go/ssa.init()
+*ssa.Call: t10 = golang.org/x/tools/go/ssa/ssautil.init()
+*ssa.Jump: jump 2
+
+Block: 2
+*ssa.Return: return
+
+
+Function: main
+Block: 0
+*ssa.Call: t0 = flag.String("file":string, "":string, "Go source file to...":string)
+*ssa.Call: t1 = flag.Parse()
+*ssa.UnOp: t2 = *t0
+*ssa.BinOp: t3 = t2 == "":string
+[inputFile]
+*ssa.If: if t3 goto 1 else 2
+
+Block: 1
+*ssa.Alloc: t4 = new [1]any (varargs)
+*ssa.IndexAddr: t5 = &t4[0:int]
+*ssa.MakeInterface: t6 = make any <- string ("Please provide an...":string)
+*ssa.Store: *t5 = t6
+*ssa.Slice: t7 = slice t4[:]
+*ssa.Call: t8 = fmt.Println(t7...)
+*ssa.Call: t9 = os.Exit(1:int)
+*ssa.Jump: jump 2
+
+Block: 2
+*ssa.Call: t10 = go/token.NewFileSet()
+*ssa.Store: *fset = t10
+*ssa.UnOp: t11 = *fset
+*ssa.UnOp: t12 = *t0
+*ssa.Call: t13 = go/parser.ParseFile(t11, t12, nil:any, 4:go/parser.Mode)
+*ssa.Extract: t14 = extract t13 #0
+*ssa.Extract: t15 = extract t13 #1
+*ssa.BinOp: t16 = t15 != nil:error
+[err nil]
+*ssa.If: if t16 goto 3 else 4
+
+Block: 3
+*ssa.Alloc: t17 = new [1]any (varargs)
+*ssa.IndexAddr: t18 = &t17[0:int]
+*ssa.ChangeInterface: t19 = change interface any <- error (t15)
+*ssa.Store: *t18 = t19
+*ssa.Slice: t20 = slice t17[:]
+*ssa.Call: t21 = log.Fatal(t20...)
+*ssa.Jump: jump 4
+
+Block: 4
+*ssa.UnOp: t22 = *fset
+*ssa.MakeInterface: t23 = make go/ast.Node <- *go/ast.File (t14)
+*ssa.Call: t24 = gotypetracer/utils.InitLineToVars(t22, t23)
+*ssa.Alloc: t25 = new golang.org/x/tools/go/loader.Config (conf)
+*ssa.FieldAddr: t26 = &t25.Fset [#0]
+*ssa.UnOp: t27 = *fset
+*ssa.Store: *t26 = t27
+*ssa.Alloc: t28 = new [1]*go/ast.File (varargs)
+*ssa.IndexAddr: t29 = &t28[0:int]
+*ssa.Store: *t29 = t14
+*ssa.Slice: t30 = slice t28[:]
+*ssa.Call: t31 = (*golang.org/x/tools/go/loader.Config).CreateFromFiles(t25, "example":string, t30...)
+*ssa.Call: t32 = (*golang.org/x/tools/go/loader.Config).Load(t25)
+*ssa.Extract: t33 = extract t32 #0
+*ssa.Extract: t34 = extract t32 #1
+*ssa.BinOp: t35 = t34 != nil:error
+[err nil]
+*ssa.If: if t35 goto 5 else 6
+
+Block: 5
+*ssa.Alloc: t36 = new [1]any (varargs)
+*ssa.IndexAddr: t37 = &t36[0:int]
+*ssa.ChangeInterface: t38 = change interface any <- error (t34)
+*ssa.Store: *t37 = t38
+*ssa.Slice: t39 = slice t36[:]
+*ssa.Call: t40 = log.Fatal(t39...)
+*ssa.Jump: jump 6
+
+Block: 6
+*ssa.Call: t41 = golang.org/x/tools/go/ssa/ssautil.CreateProgram(t33, 8:golang.org/x/tools/go/ssa.BuilderMode)
+*ssa.Call: t42 = (*golang.org/x/tools/go/ssa.Program).Build(t41)
+*ssa.FieldAddr: t43 = &t33.Created [#1]
+*ssa.UnOp: t44 = *t43
+*ssa.IndexAddr: t45 = &t44[0:int]
+*ssa.UnOp: t46 = *t45
+*ssa.FieldAddr: t47 = &t46.Pkg [#0]
+*ssa.UnOp: t48 = *t47
+*ssa.Call: t49 = (*golang.org/x/tools/go/ssa.Program).Package(t41, t48)
+*ssa.Call: t50 = (*golang.org/x/tools/go/ssa.Package).Build(t49)
+*ssa.UnOp: t51 = *fset
+*ssa.Call: t52 = gotypetracer/utils.PrintAllFunc(t49, t51)
+*ssa.Return: return
+
+

@@ -15,7 +15,7 @@ Block: 2
 Function: main
 Block: 0
 *ssa.MakeInterface: t0 = make interface{} <- string ("hello":string)
-*ssa.TypeAssert: typeassert t0.(int)
+*ssa.TypeAssert: t1 = typeassert t0.(int)
 *ssa.Alloc: t2 = new [1]any (varargs)
 *ssa.IndexAddr: t3 = &t2[0:int]
 *ssa.MakeInterface: t4 = make any <- int (t1)
