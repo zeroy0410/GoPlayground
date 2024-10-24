@@ -2,6 +2,22 @@ package main
 
 import (
 	"fmt"
+	"go/ast"
+	"go/importer"
+	"go/parser"
+	"go/token"
+	"go/types"
+	"os"
+
+	"golang.org/x/tools/go/ssa"
+	"golang.org/x/tools/go/ssa/ssautil"
+)
+
+const hello = `
+package main
+
+import (
+	"fmt"
 	"time"
 )
 
@@ -62,12 +78,6 @@ func main() {
 	ch2 := make(chan string)
 	x := "I am X!"
 
-	w := func() {
-		fmt.Println(x)
-	}
-
-	fmt.Println(w)
-
 	// 启动一个 goroutine 来发送消息到 channel 1
 	go func() {
 		fmt.Println(x)
@@ -97,4 +107,36 @@ func main() {
 
 	// 为了等待所有 goroutine 完成，我们等待一段时间
 	time.Sleep(10 * time.Second)
+}
+
+`
+
+func main() {
+	// Parse the source files.
+	fset := token.NewFileSet()
+	f, err := parser.ParseFile(fset, "hello.go", hello, parser.ParseComments)
+	if err != nil {
+		fmt.Print(err) // parse error
+		return
+	}
+	files := []*ast.File{f}
+
+	// Create the type-checker's package.
+	pkg := types.NewPackage("hello", "")
+
+	// Type-check the package, load dependencies.
+	// Create and build the SSA program.
+	hello, _, err := ssautil.BuildPackage(
+		&types.Config{Importer: importer.Default()}, fset, pkg, files, ssa.SanityCheckFunctions)
+	if err != nil {
+		fmt.Print(err) // type error in some package
+		return
+	}
+
+	// Print out the package.
+	hello.WriteTo(os.Stdout)
+
+	// Print out the package-level functions.
+	hello.Func("init").WriteTo(os.Stdout)
+	hello.Func("main").WriteTo(os.Stdout)
 }

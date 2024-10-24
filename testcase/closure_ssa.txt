@@ -1,0 +1,30 @@
+Function: init
+Block: 0
+*ssa.UnOp: t0 = *init$guard
+*ssa.If: if t0 goto 2 else 1
+
+Block: 1
+*ssa.Store: *init$guard = true:bool
+*ssa.Call: t1 = fmt.init()
+*ssa.Jump: jump 2
+
+Block: 2
+*ssa.Return: return
+
+
+Function: anonymous_function_001_F
+Block: 0
+*ssa.Call: t0 = anonymous_function_001_F$1(__taint_src, "foo":string)
+*ssa.MakeInterface: t1 = make interface{} <- string (t0)
+*ssa.Call: t2 = __taint_sink(t1)
+*ssa.Return: return
+
+
+Function: __taint_sink
+Block: 0
+*ssa.Alloc: t0 = new [1]any (varargs)
+*ssa.IndexAddr: t1 = &t0[0:int]
+*ssa.Store: *t1 = o
+*ssa.Slice: t2 = slice t0[:]
+*ssa.Call: t3 = fmt.Println(t2...)
+*ssa.Return: return
